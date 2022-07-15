@@ -173,7 +173,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"nome\": \"{{$randomCurrencyName}}\",\r\n    \"preco\": \"50\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"{{$randomInt}}\"\r\n}",
+											"raw": "{\r\n    \"nome\": \"{{$randomUUID}}\",\r\n    \"preco\": \"50\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"{{$randomInt}}\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1146,7 +1146,7 @@
 													"     body: {\r",
 													"         mode: 'raw',\r",
 													"         raw: JSON.stringify({\r",
-													"            \"nome\": pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\"),\r",
+													"            \"nome\": pm.variables.replaceIn(\"{{$randomCommonFileName}}\"),\r",
 													"            \"preco\": 50,\r",
 													"            \"descricao\": pm.variables.replaceIn(\"{{$randomJobDescriptor}}\"),\r",
 													"            \"quantidade\": pm.variables.replaceIn(\"{{$randomInt}}\")\r",
@@ -2677,7 +2677,41 @@
 											"listen": "prerequest",
 											"script": {
 												"exec": [
-													""
+													"const url = pm.environment.get('baseURL')\r",
+													"\r",
+													"const nomeAleatorio = pm.variables.replaceIn(\"{{$randomUserName}}\");\r",
+													"const emailAleatorio = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+													"const senhaAleatoria = pm.variables.replaceIn(\"{{$randomPassword}}\");\r",
+													"\r",
+													"//-------------------------------------------Usuario-----------------------------------------------\r",
+													"\r",
+													"const CadastroDeUsuarioRequest = {\r",
+													"     url: `${url}/usuarios`, //variável\r",
+													"     method: 'POST',\r",
+													"    header: {\r",
+													"         'Content-Type': 'application/json',\r",
+													"    },\r",
+													"     body: {\r",
+													"         mode: 'raw',\r",
+													"         raw: JSON.stringify({\r",
+													"            \"nome\": nomeAleatorio,\r",
+													"            \"email\": emailAleatorio,\r",
+													"            \"password\": senhaAleatoria,\r",
+													"            \"administrador\": \"true\"\r",
+													"        })\r",
+													"     }\r",
+													" }\r",
+													"\r",
+													"pm.sendRequest(CadastroDeUsuarioRequest, (err, response) => {\r",
+													"    const respo = response.json();\r",
+													"    try {\r",
+													"        //operação\r",
+													"        pm.environment.set(\"emailValido\", emailAleatorio);\r",
+													"    } catch {\r",
+													"        //operação\r",
+													"        console.warn('Fail')\r",
+													"    }\r",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -5322,7 +5356,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"nome\": \"{{$randomAlphaNumeric}}\",\r\n    \"preco\": \"{{$randomInt}}\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"10\"\r\n}",
+											"raw": "{\r\n    \"nome\": \"{{$randomUrl}}\",\r\n    \"preco\": \"50\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"10\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -5571,7 +5605,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"nome\": \"{{$randomAbbreviation}}\",\r\n    \"preco\": \"{{$randomInt}}\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"{{$randomInt}}\"\r\n}",
+											"raw": "{\r\n    \"nome\": \"{{$randomBankAccount}}\",\r\n    \"preco\": \"{{$randomInt}}\",\r\n    \"descricao\": \"{{$randomJobDescriptor}}\",\r\n    \"quantidade\": \"{{$randomInt}}\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
